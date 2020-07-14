@@ -12,5 +12,8 @@ public interface SyncService {
 	public int syncWikiFromTemplates(String sheetName, List<CommuTableTemplate> templates);
 
 	List<CommuTableTemplate> getTemplateFromSheet(String string);
-    
+
+	int syncRCardTemplates(List<String> IdolNameKR);
+
+	int syncCommonCommu(List<String> IdolNameKR) throws Exception;
 }

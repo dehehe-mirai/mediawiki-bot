@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * type: P or S id: Unique ID or "select" name: name of commu
+ * type: P or S 
+ * id: Unique ID or "select" 
+ * name: name of commu
  */
 public class CommuTable {
     private static final Logger logger = LoggerFactory.getLogger(CommuTable.class);

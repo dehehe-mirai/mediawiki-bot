@@ -3,8 +3,10 @@ package io.hardplant.sync.service.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import io.hardplant.cmmn.impl.CommuTable;
 import io.hardplant.cmmn.impl.CommuTableTemplate;
+import io.hardplant.cmmn.impl.UnitUtills;
 import io.hardplant.sheet_parser.SheetTableConverter;
 import io.hardplant.sync.service.SyncService;
 
@@ -55,19 +58,59 @@ public class SyncServiceImplTest {
     
     @Test
     public void Test_syncWikiWithSheet() {
-        assertEquals("", "\\".replace("\\", ""));
-        assertTrue(syncService.logonWiki(id, pwd));
+        //assertEquals("", "\\".replace("\\", ""));
+
         String[] names = new String[]{
-            "사쿠라기 마노", "하치미야 메구루", "카자노 히오리",
-            "츠키오카 코가네", "미츠미네 유이카", "시라세 사쿠야", "유코쿠 키리코", "타나카 마미미",
-            "코미야 카호", "아리스가와 나츠하", "소노다 치요코", "모리노 린제", "사이죠 쥬리",
+            //"사쿠라기 마노" , "하치미야 메구루", "카자노 히오리",
+            //"츠키오카 코가네", "미츠미네 유이카", "시라세 사쿠야", "유코쿠 키리코", "타나카 마미미",
+            //"코미야 카호", "아리스가와 나츠하", "소노다 치요코", "모리노 린제", "사이죠 쥬리",
             "오사키 아마나", "오사키 텐카", "쿠와야마 치유카",
             "세리자와 아사히", "마유즈미 후유코", "이즈미 메이",
             "아사쿠라 토오루", "히구치 마도카", "이치카와 히나나", "후쿠마루 코이토"
         };
         
         for(String name : names) {
+            assertTrue(syncService.logonWiki(id, pwd));
             syncService.syncWikiWithSheet(name);
+        }
+    }
+
+    @Test
+    public void Test_syncRCardTemplatesOne() {
+        assertTrue(syncService.logonWiki(id, pwd));
+        List<String> idols = Arrays.asList("사쿠라기 마노");
+
+        syncService.syncRCardTemplates(idols);
+    }
+
+    @Test
+    public void Test_syncRCardTemplatesAll() {
+        assertTrue(syncService.logonWiki(id, pwd));
+        
+        syncService.syncRCardTemplates(UnitUtills.idolListKR);
+    }
+
+    @Test
+    public void Test_syncCommonCommuOne() {
+        assertTrue(syncService.logonWiki(id, pwd));
+        List<String> idols = Arrays.asList("세리자와 아사히");
+
+        try {
+            syncService.syncCommonCommu(idols);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    @Test
+    public void Test_syncCommonCommuAll() {
+        assertTrue(syncService.logonWiki(id, pwd));
+
+        try {
+            syncService.syncCommonCommu(UnitUtills.idolListKR);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -83,6 +126,11 @@ public class SyncServiceImplTest {
             templates.add(template);
         }
         return templates;
+    }
+
+    @Test
+    public void Test_syncRCardTemplate() {
+
     }
     
     private List<CommuTable> getTables() {

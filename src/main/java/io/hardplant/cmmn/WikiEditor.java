@@ -66,4 +66,8 @@ public class WikiEditor {
         }
     }
 
+	public boolean docExists(String title) {
+		return wiki.exists(title);
+	}
+
 }
